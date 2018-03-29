@@ -3,7 +3,8 @@
 ---
 fixtures:
   forge_modules:
-    "stdlib": "puppetlabs/stdlib"
     "epel": "stahnma/epel"
+    "inifile": "puppetlabs/inifile"
+    "stdlib": "puppetlabs/stdlib"
   symlink:
     "holland": "#{source_dir}"
