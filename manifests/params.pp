@@ -11,6 +11,8 @@ class holland::params {
 
   case $facts['os']['family'] {
     'RedHat': {
+      $config_d       = '/etc/holland'
+      $config_file    = "${config_d}/holland.conf"
       $package_name   = 'holland'
       $package_prefix = 'holland-'
       $package_repo   = Yumrepo['epel']
