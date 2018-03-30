@@ -14,14 +14,14 @@ class holland::install {
     default => lookup('holland::modules', Optional[Hash], 'deep', undef)
   }
 
-  $package_ensure = $holland::package_ensure
-  $package_name   = $holland::package_name
-  $package_prefix = $holland::package_prefix
-  $package_repo   = $holland::package_repo
+  $install_options = $holland::install_options
+  $package_ensure  = $holland::package_ensure
+  $package_name    = $holland::package_name
+  $package_prefix  = $holland::package_prefix
 
   Package {
-    ensure  => $package_ensure,
-    require => $package_repo,
+    ensure          => $package_ensure,
+    install_options => $install_options,
   }
 
   package { 'holland': name => $package_name, }
