@@ -9,7 +9,7 @@
 #
 class holland::install {
 
-  $modules        = $holland::modules
+  $modules        = $holland::_modules
   $package_ensure = $holland::package_ensure
   $package_name   = $holland::package_name
   $package_prefix = $holland::package_prefix
@@ -24,7 +24,7 @@ class holland::install {
   if $modules {
     if $modules.is_a(String) {
       $mod_name = "${package_prefix}${modules}"
-      package { $modules:
+      package { $mod_name:
         ensure  => $package_ensure,
         require => $package_repo,
       }
