@@ -101,11 +101,6 @@ class holland (
     default => lookup('holland::backupsets', Optional[Hash], 'deep', undef),
   }
 
-  $_config_options = $merge_config_options ? {
-    false   => $config_options,
-    default => lookup('holland::config_options', Optional[Hash], 'deep', undef),
-  }
-
   Class['holland::install']
   ->Class['holland::setup']
   ->Class['holland::backupsets']
