@@ -14,7 +14,6 @@ class holland::install {
     default => lookup('holland::modules', Optional[Hash], 'deep', undef)
   }
 
-  $modules = $holland::_modules
   $package_ensure = $holland::package_ensure
   $package_name   = $holland::package_name
   $package_prefix = $holland::package_prefix
