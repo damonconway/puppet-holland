@@ -9,7 +9,12 @@
 #
 class holland::install {
 
-  $modules        = $holland::_modules
+  $modules = $holland::merge_modules ? {
+    false   => $holland::modules,
+    default => lookup('holland::modules', Optional[Hash], 'deep', undef)
+  }
+
+  $modules = $holland::_modules
   $package_ensure = $holland::package_ensure
   $package_name   = $holland::package_name
   $package_prefix = $holland::package_prefix
@@ -25,26 +30,10 @@ class holland::install {
   package { "${package_prefix}common": }
 
   if $modules {
-    debug { "holland::modules was set.": }
-    if $modules.is_a(String) {
-      debug { "holland::modules is a String.": }
-      $mod_name = "${package_prefix}${modules}"
+    $modules.each |$mod,$opts| {
+      $mod_name = "${package_prefix}${mod}"
       debug { "holland::install::mod_name = $mod_name": }
-      package { $mod_name: }
-    } elsif $modules.is_a(Array) {
-      debug { "holland::modules is an Array.": }
-      $modules.each |$mod| {
-        $mod_name = "${package_prefix}${mod}"
-        debug { "holland::install::mod_name = $mod_name": }
-        package { $mod_name: }
-      }
-    } elsif $modules.is_a(Hash) {
-      debug { "holland::modules is a Hash.": }
-      $modules.each |$mod,$opts| {
-        $mod_name = "${package_prefix}${mod}"
-        debug { "holland::install::mod_name = $mod_name": }
-        package { $mod_name: * => $opts }
-      }
+      package { $mod_name: * => $opts }
     }
   }
 
