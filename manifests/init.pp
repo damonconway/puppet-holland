@@ -107,10 +107,10 @@ class holland (
   }
 
   if $merge_modules {
-    if $modules.is_a(Array) or $modules.is_a(String) {
-      $_modules = lookup('holland::modules', Variant[Array,String], 'unique')
-    } elsif $modules.is_a(Hash) {
+    if $modules.is_a(Hash) {
       $_modules = lookup('holland::modules', Hash, 'deep')
+    } else {
+      $_modules = lookup('holland::modules', Variant[Hash,Array,String,Undef], 'unique',undef)
     }
   } else {
     $_modules = $modules
