@@ -15,7 +15,6 @@ class holland::params {
       $config_file    = "${config_d}/holland.conf"
       $package_name   = 'holland'
       $package_prefix = 'holland-'
-      $package_repo   = Yumrepo['epel']
     }
     default: {
       fail("Unsupported osfamily: ${facts['os']['family']}")
