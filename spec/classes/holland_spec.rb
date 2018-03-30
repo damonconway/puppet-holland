@@ -4,7 +4,7 @@ describe 'holland' do
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
       let(:facts) { os_facts }
-      let(:pre_condition) { ['include epel','include holland'] }
+      let(:pre_condition) { ['include epel', 'include holland'] }
 
       describe 'when called with default parameters.' do
         it { is_expected.to compile.with_all_deps }

@@ -31,7 +31,7 @@ class holland::install {
   if $modules {
     $modules.each |$mod,$opts| {
       $mod_name = "${package_prefix}${mod}"
-      debug { "holland::install::mod_name = $mod_name": }
+      debug { "holland::install::mod_name = ${mod_name}": }
       package { $mod_name: * => $opts }
     }
   }
