@@ -85,7 +85,7 @@ class holland (
   Boolean $merge_backupsets                         = true,
   Boolean $merge_config_options                     = true,
   Boolean $merge_modules                            = true,
-  Variant[Array,String,Undef] $modules              = $holland::params::modules,
+  Variant[Hash,Array,String,Undef] $modules         = $holland::params::modules,
   Enum['absent','present','latest'] $package_ensure = $holland::params::package_ensure,
   String $package_name                              = $holland::params::package_name,
   String $package_prefix                            = $holland::params::package_prefix,
@@ -106,9 +106,14 @@ class holland (
     default => lookup('holland::config_options', Optional[Hash], 'deep', undef),
   }
 
-  $_modules = $merge_modules ? {
-    false   => $modules,
-    default => lookup('holland::modules', Variant[Array,String,Undef], 'unique', undef),
+  if $merge_modules {
+    if $modules.is_a(Array) or $modules.is_a(String) {
+      $_modules = lookup('holland::modules', Variant[Array,String], 'unique')
+    } elsif $modules.is_a(Hash) {
+      $_modules = lookup('holland::modules', Hash, 'deep')
+    }
+  } else {
+    $_modules = $modules
   }
 
   Class['holland::install']

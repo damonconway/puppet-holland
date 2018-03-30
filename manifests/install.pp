@@ -15,26 +15,28 @@ class holland::install {
   $package_prefix = $holland::package_prefix
   $package_repo   = $holland::package_repo
 
-  package { 'holland':
+  Package {
     ensure  => $package_ensure,
-    name    => $package_name,
     require => $package_repo,
   }
+
+  package { 'holland': name => $package_name, }
+
+  package { "${package_prefix}common": }
 
   if $modules {
     if $modules.is_a(String) {
       $mod_name = "${package_prefix}${modules}"
-      package { $mod_name:
-        ensure  => $package_ensure,
-        require => $package_repo,
-      }
+      package { $mod_name: }
     } elsif $modules.is_a(Array) {
       $modules.each |$mod| {
         $mod_name = "${package_prefix}${mod}"
-        package { $mod_name:
-          ensure  => $package_ensure,
-          require => $package_repo,
-        }
+        package { $mod_name: }
+      }
+    } elsif $modules.is_a(Hash) {
+      $modules.each |$mod,$opts| {
+        $mod_name = "${package_prefix}${mod}"
+        package { $mod_name: * => $opts }
       }
     }
   }
