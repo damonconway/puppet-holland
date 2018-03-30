@@ -117,7 +117,7 @@ class holland (
   }
 
   Class['holland::install']
-  ~>Class['holland::setup']
-  ~>Class['holland::backupsets']
+  ->Class['holland::setup']
+  ->Class['holland::backupsets']
 
 }
