@@ -108,7 +108,7 @@ class holland (
 
   $_modules = $merge_modules ? {
     false   => $modules,
-    default => lookup('holland::modules', Optional[Hash], 'deep', undef),
+    default => lookup('holland::modules', Variant[Array,String,Undef], 'unique', undef),
   }
 
   Class['holland::install']
