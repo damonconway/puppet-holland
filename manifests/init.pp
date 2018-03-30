@@ -82,6 +82,7 @@ class holland (
   Stdlib::Absolutepath $config_d                    = $holland::params::config_d,
   String $config_file                               = $holland::params::config_file,
   Optional[Hash] $config_options                    = undef,
+  Optional[Array] $install_options                  = undef,
   Boolean $merge_backupsets                         = true,
   Boolean $merge_config_options                     = true,
   Boolean $merge_modules                            = true,
@@ -89,7 +90,6 @@ class holland (
   Enum['absent','present','latest'] $package_ensure = $holland::params::package_ensure,
   String $package_name                              = $holland::params::package_name,
   String $package_prefix                            = $holland::params::package_prefix,
-  $package_repo                                     = $holland::params::package_repo,
 ) inherits holland::params {
 
   contain holland::install
