@@ -7,4 +7,10 @@
 # @example
 #   include holland::backupsets
 class holland::backupsets {
+
+  $backupsets = $holland::merge_backupsets ? {
+    false   => $holland::backupsets,
+    default => lookup('holland::backupsets', Optional[Hash], 'deep', undef),
+  }
+
 }

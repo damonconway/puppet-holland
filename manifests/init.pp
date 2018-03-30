@@ -96,11 +96,6 @@ class holland (
   contain holland::setup
   contain holland::backupsets
 
-  $_backupsets = $merge_backupsets ? {
-    false   => $backupsets,
-    default => lookup('holland::backupsets', Optional[Hash], 'deep', undef),
-  }
-
   Class['holland::install']
   ->Class['holland::setup']
   ->Class['holland::backupsets']
