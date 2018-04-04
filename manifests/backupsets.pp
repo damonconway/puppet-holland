@@ -13,4 +13,12 @@ class holland::backupsets {
     default => lookup('holland::backupsets', Optional[Hash], 'deep', undef),
   }
 
+  if $backupsets {
+    $backupsets.each |$bset,$opts| {
+      holland::backupset { "holland_backupset ${bset}":
+        *              => $opts,
+        backupset_name => $bset,
+    }
+  }
+
 }
