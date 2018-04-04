@@ -14,6 +14,10 @@ class holland::setup {
   $config_file = $holland::config_file
   $defaults    = { 'path' => $config_file }
 
+  file { $config_file:
+    ensure => file,
+  }
+
   if $config_options {
     create_ini_settings($config_options, $defaults)
   }
