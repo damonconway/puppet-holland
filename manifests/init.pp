@@ -78,9 +78,11 @@
 # Copyright 2018 Damon Conway, unless otherwise noted.
 #
 class holland (
+  Optional[Array] $active_backupsets                = undef,
   Optional[Hash] $backupsets                        = undef,
   Stdlib::Absolutepath $config_d                    = $holland::params::config_d,
   String $config_file                               = $holland::params::config_file,
+  Stdlib::Absolutepath $backupsets_dir              = "${config_d}/backupsets",
   Optional[Hash] $config_options                    = undef,
   Optional[Array] $install_options                  = undef,
   Boolean $merge_backupsets                         = true,
@@ -90,14 +92,18 @@ class holland (
   Enum['absent','present','latest'] $package_ensure = $holland::params::package_ensure,
   String $package_name                              = $holland::params::package_name,
   String $package_prefix                            = $holland::params::package_prefix,
+  Optional[Hash] $providers                         = undef,
+  Stdlib::Absolutepath $providers_dir               = "${config_d}/providers",
 ) inherits holland::params {
 
   contain holland::install
   contain holland::setup
   contain holland::backupsets
+  contain holland::providers
 
   Class['holland::install']
   ->Class['holland::setup']
   ->Class['holland::backupsets']
+  ->Class['holland::providers']
 
 }
