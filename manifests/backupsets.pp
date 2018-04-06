@@ -18,6 +18,7 @@ class holland::backupsets {
       holland::backupset { "holland_backupset ${bset}":
         *              => $opts,
         backupset_name => $bset,
+      }
     }
   }
 
